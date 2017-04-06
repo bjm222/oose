@@ -1,0 +1,80 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yuanweizhao.announcment.AnnouncementUI.Local.AnnouncementDetailLocalFragment"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="title"
+            android:id="@+id/viewLocalAnnouncementTitle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="26dp"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="time and location"
+            android:id="@+id/viewLocalAnnouncementTimeAndLocation"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_below="@+id/viewLocalAnnouncementLocation"
+            android:layout_alignStart="@+id/viewLocalAnnouncementLocation"
+            android:layout_marginLeft="26dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="organization and email"
+            android:id="@+id/viewLocalAnnouncementHostInfo"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_below="@+id/viewLocalAnnouncementTimeAndLocation"
+            android:layout_alignStart="@+id/viewLocalAnnouncementTimeAndLocation"
+            android:layout_marginLeft="26dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="summary"
+            android:id="@+id/viewLocalAnnouncementLocation"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_below="@+id/viewLocalAnnouncementTitle"
+            android:layout_alignStart="@+id/viewLocalAnnouncementTitle"
+            android:layout_marginLeft="26dp" />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/localDetailWeb"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="50dp" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/localDeleteButton"
+        android:text="Delete"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>
+
+

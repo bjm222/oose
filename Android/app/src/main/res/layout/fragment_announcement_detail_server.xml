@@ -1,0 +1,139 @@
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yuanweizhao.announcment.DataModel.Announcement.AnnouncementDetailLocalFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewServerAnnouncementIcon"
+        android:src="@drawable/icon_default"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="15dp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ServerAnnouncementScrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/viewServerAnnouncementIcon"
+        android:layout_alignBottom="@+id/viewServerAnnouncementIcon">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Note title"
+            android:id="@+id/viewServerAnnouncementTile" />
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ServerAnnouncementScrollView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New text"
+            android:id="@+id/viewServerAnnouncementContent"
+            android:textSize="18sp"
+            android:textColor="#000000"/>
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/serverRegisterButton"
+        android:text="Register"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@id/ServerAnnouncementScrollView"/>
+</RelativeLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.yuanweizhao.announcment.AnnouncementUI.Server.AnnouncementDetailServerFragment"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="title"
+        android:id="@+id/viewServerAnnouncementTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="26dp" />
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="time and location"
+        android:id="@+id/viewServerAnnouncementTimeAndLocation"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/viewServerAnnouncementLocation"
+        android:layout_centerHorizontal="true"
+            android:layout_marginLeft="26dp" />
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="organization and email"
+        android:id="@+id/viewServerAnnouncementHostInfo"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/viewServerAnnouncementTimeAndLocation"
+        android:layout_centerHorizontal="true"
+            android:layout_marginLeft="26dp" />
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="summary"
+        android:id="@+id/viewServerAnnouncementLocation"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/viewServerAnnouncementTitle"
+        android:layout_centerHorizontal="true"
+            android:layout_marginLeft="26dp" />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/viewServerAnnouncementHostInfo"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/serverDetailWeb"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="50dp" />
+    </LinearLayout>
+
+    <Button
+    android:layout_width="match_parent"
+        android:id="@+id/serverRegisterButton"
+    android:text="Register"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+        android:layout_height="50dp" />
+
+</RelativeLayout>
+

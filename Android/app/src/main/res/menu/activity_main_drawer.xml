@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_surrounding_events"
+        android:icon="@drawable/ic_near_me_black_24dp"
+        android:title="Surrounding Events" />
+    <item
+        android:id="@+id/nav_all_announcements"
+        android:icon="@drawable/ic_announcement_black_24dp"
+        android:title="All Announcements" />
+    <item
+        android:id="@+id/nav_registered_events"
+        android:icon="@drawable/ic_event_black_24dp"
+        android:title="Registered Events" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="Setting" />
+
+</menu>

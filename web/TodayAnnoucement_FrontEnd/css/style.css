@@ -1,0 +1,32 @@
+@charset "UTF-8";
+h3 {
+	text-decoration: underline;
+	color: Navy;
+}
+.FormMain {
+	margin-left: 8%;
+	margin-right: 8%;
+}
+#submitbtn {
+	text-align: center;
+	float: right;
+	
+}
+.ManagButton {
+	float: right;
+}
+
+
+#container{
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+body {
+    background-color: lightblue;
+    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

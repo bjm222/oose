@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>AdminManage</title>
+      <!-- Bootstrap -->
+      <link href="css/bootstrap.css" rel="stylesheet">
+      <style type="text/css">
+         .MangeJumb {}
+      </style>
+      <link href="css/ManageStyle.css" rel="stylesheet" type="text/css">
+      <style type="text/css">
+         body {
+         }
+         h3 {
+         color: Navy;
+         }
+         ul {
+         font-size: 12px;
+         }
+         li {
+         font-size: 15Px;
+         }
+         .details {
+         display: block;
+         }
+         #staticsbtn {
+         display: none;
+         }
+         .hide {
+         display: none!important;
+         }
+         #historycloseBtn, #historyBtn {
+         text-align: center;
+         float: right;
+         }
+         #locationMange, #hist11 {
+             float: right;
+         }
+         #staticsdetails {
+             margin-left: 220px;
+             margin-right: auto;
+         }
+         
+         #endDate {z-index: 1151 !important;}
+         #startDate {z-index: 1151 !important;}
+      </style>
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="js/jquery-1.11.3.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <!-- sweet alert-->
+      <script src="js/sweetalert.min.js"></script> 
+      <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+      <script src="js/liquidGuage.js" language="JavaScript"></script>
+      <script src="js/bootstrap.js"></script>
+      <script src="js/ApiContext.js"></script>
+      <script src="js/managementPage.js"></script>
+      <!-- datepicker-->
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+   </head>
+   <body>
+      <div class="container-fluid">
+         <div class="page-header">
+            <h2><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Admin Management System <span><button id="hist11" type="button" class="btn btn-success " data-toggle="modal" data-target="#historyModal"> History</button>  <button id="locationMange" type="button" class="btn btn-warning "> Manage Location</button></span></h2>
+            
+            <div class="btn-toolbar" role="toolbar">
+               <div class="btn-group" role="group">
+                 
+                  
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                     <div class="modal-dialog">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <div class="col-sm-10">
+                                 <label for="startDate">Starting Date:</label>
+                                 <div class="input-group">
+                                    <input name="startDate" id="startDate" value="" type="text" class="form-control" placeholder="yyyy-mm-dd" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                                 </div>
+                                 <br>
+                                 <br>
+                                 <br>
+                              </div>
+                              <div class="col-sm-10">
+                                 <label for="endDate">Ending Date:</label>
+                                 <div class="input-group">
+                                    <input name="endDate" id="endDate" value="" type="text" class="form-control" placeholder="yyyy-mm-dd" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="modal-footer" >
+                              <button id="historycloseBtn" type="button" class="btn btn-default" data-dismiss="modal" >
+                              Close
+                              </button>
+                              <button class="btn btn-primary" id="historyBtn">
+                              Go!
+                              </button>
+                           </div>
+                        </div>
+                        <!-- /.modal-content -->
+                     </div>
+                     <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <!-- Left side: for displaying all the Announcements/Events list -->
+            <div class="col-sm-5">
+               <div class="col-sm-10">
+                  <h3>
+                     <I><u><STRONG>Annoucements/Events:</STRONG></u></I>
+                  </h3>
+                  <div id=Unapproved>
+                  </div>
+                  <div id=Approved>
+                  </div>
+                  <div id=Declined>
+                  </div>
+               </div>
+            </div>
+            <!-- Right side: For displaying the details and for Approving/Modifying/Deleting/Decling -->
+            <div class="col-sm-7">
+               <h3><u><I><strong>Status:</strong></I></u></h3>
+               <div id="status">
+               </div>
+               <br>
+               <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1"> Approve</button>
+                  <div id="myModal1" class="modal fade" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           </div>
+                           <div class="modal-body">
+                              <h3>Are you sure?</h3>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">
+                              CANCEL
+                              </button>
+                              <button id="ApproveBtn" type="button" class="btn btn-primary" data-dismiss="modal">
+                              YES!
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <button id="ModifyBtn" type="button" class="btn btn-success" > Modify</button>
+         
+                  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal3"> Delete</button>
+                  <div id="myModal3" class="modal fade" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           </div>
+                           <div class="modal-body">
+                              <h3>Are you sure?</h3>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">
+                              CANCEL
+                              </button>
+                              <button id="DeleteBtn" type="button" class="btn btn-primary" data-dismiss="modal">
+                              YES!
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal4"> Decline</button>
+                  <!-- Modal -->
+                  <div id="myModal4" class="modal fade" role="dialog">
+                     <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Reason:</h4>
+                           </div>
+                           <div class="modal-body">
+                              
+                                 <input id="declinereason" type="text" class="form-control" rows="2">
+                         
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">
+                              Close
+                              </button>
+                              <button type="button" class="btn btn-primary" id="declineBtn" data-dismiss="modal">
+                              Send!
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!--Modol -->
+                  <br/>
+               </div>
+               <!-- Displaying the Announcements/Events details here -->
+               <h3>
+                  <u><I><strong>Announcement Info:</strong></I></u>
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailsModal" id="viewDetails"> View details</button>
+                  <button id="staticsbtn" data-toggle="modal" data-target="#staticsModal" type="button" class="btn btn-primary btn-sm"> Statistics </button>
+               </h3>
+               <!-- Modal -->
+               <div id="detailsModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                     <!-- Modal content-->
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">Details:</h4>
+                        </div>
+                        <div class="modal-body">
+                           <div id="AnnouncementDetailsModal">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!--Modol -->
+               <!-- Modal -->
+               <div id="staticsModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                     <!-- Modal content-->
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">Statistics:</h4>
+                        </div>
+                        <div class="modal-body">
+                           <div id="staticsdetails">
+
+                           <svg id="fillgauge" width="97%" height="250" ></svg>
+
+                           </div>
+
+                           <div id="attenddetails" >
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!--Modol -->
+               <div id="AnnouncementDetails">
+               </div>
+            </div>
+         </div>
+               <div class="row">
+            <hr>
+            <div class="col-lg-12">
+               <div class="col-md-8">
+                  <a href="#">Privacy</a>
+               </div>
+               <div class="col-md-4">
+                  <p class="muted pull-right">© 2016 OOSE Group8 </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+
+   <script language="JavaScript">
+    
+
+</script>
+</html>

@@ -1,0 +1,796 @@
+---
+swagger: "2.0"
+info:
+  description: "For Presentation"
+  version: "1.0.4"
+  title: "Today's Announcement + API"
+basePath: "/v1"
+schemes:
+- "https"
+- "http"
+produces:
+- "application/json"
+paths:
+  /announcement:
+    get:
+      tags:
+      - "User"
+      summary: "View Today's Announcements"
+      description: "For mobile users, get a list of announcements pushed today.\n"
+      parameters: []
+      responses:
+        200:
+          description: "An array of announcements"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Announcement"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/<id>:
+    get:
+      tags:
+      - "User"
+      summary: "View Announcement Detail"
+      description: "For mobile users, get detail of a pushed announcement.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Requested detailed announcement"
+          schema:
+            $ref: "#/definitions/DetailedAnnouncement"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/<id>/attend:
+    post:
+      tags:
+      - "User"
+      summary: "Attend Event"
+      description: "For mobile users, get announcements of a specific date period.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "userinfo"
+        description: "User information for attending an event"
+        required: true
+        schema:
+          $ref: "#/definitions/AttendantInfo"
+      responses:
+        200:
+          description: "Success, OK"
+        404:
+          description: "Event not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/bydate:
+    get:
+      tags:
+      - "User"
+      summary: "View Announcement By Date"
+      description: "For mobile users, get pushed announcements of a specific date\
+        \ period.\n"
+      parameters:
+      - name: "datefrom"
+        in: "query"
+        description: "Start date of announcement request"
+        required: true
+        type: "string"
+        format: "date"
+      - name: "dateto"
+        in: "query"
+        description: "End date of announcement request"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        200:
+          description: "An array of announcements"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Announcement"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage:
+    get:
+      tags:
+      - "Admin"
+      - "Applicant"
+      summary: "Manage Announcements"
+      description: "For system admin and applicant, get a list of pending announcements.\
+        \ Applicants will get their own announcements while admin will get all unpushed\
+        \ announcements.\n"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin or applicant"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of announcements for management"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AnnouncementForManagement"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/approve/<id>:
+    put:
+      tags:
+      - "Admin"
+      summary: "Approve an announcement"
+      description: "For system admin, approve a pending announcement.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Not authorized to approve"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/attendants/<id>:
+    get:
+      tags:
+      - "Admin"
+      - "Applicant"
+      summary: "Get Attendants List"
+      description: "For admin and applicants, get the list of attendants in a event.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of attendants"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AttendantInfo"
+        401:
+          description: "Not authorized to view"
+        404:
+          description: "Event not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/bydate:
+    get:
+      tags:
+      - "Admin"
+      - "Applicant"
+      summary: "Manage Announcement By Date"
+      description: "For system admin and applicant, get a list of all (penging/pushed/expired)\
+        \ announcements by date. Applicants will get their own announcements while\
+        \ admin will get all announcements.\n"
+      parameters:
+      - name: "datefrom"
+        in: "query"
+        description: "Start date of announcement request"
+        required: true
+        type: "string"
+        format: "date"
+      - name: "dateto"
+        in: "query"
+        description: "End date of announcement request"
+        required: true
+        type: "string"
+        format: "date"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin or applicant"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "An array of announcements for management"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AnnouncementForManagement"
+        401:
+          description: "Not authorized to view"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/decline/<id>:
+    put:
+      tags:
+      - "Admin"
+      summary: "Decline an announcement"
+      description: "For system admin, decline a pending announcement.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Not authorized to decline"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/delete/<id>:
+    delete:
+      tags:
+      - "Admin"
+      - "Applicant"
+      summary: "Delete an announcement"
+      description: "For system admin and applicant, delete an announcement. Applicants\
+        \ can delete their own UNPUSHED announcement while admin can delete all announcements.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin or applicant"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Not authorized to delete"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/manage/modify/<id>:
+    put:
+      tags:
+      - "Admin"
+      - "Applicant"
+      summary: "Modify an announcement"
+      description: "For system admin and applicant, modify an announcement. Announcement\
+        \ modified by applicants will automatically get Unapproved status. Pushed\
+        \ or expired announcements can onli be modified by admin.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of an announcement"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin or applicant"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "new_announcement"
+        description: "Modified announcement"
+        required: true
+        schema:
+          $ref: "#/definitions/DetailedAnnouncement"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Not authorized to modify"
+        404:
+          description: "Announcement not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /announcement/submit:
+    post:
+      tags:
+      - "Applicant"
+      summary: "Submit a new announcement"
+      description: "For applicant, submit a new announcement. No login needed and\
+        \ an email containing access code will be sent to the applicant.\n"
+      parameters:
+      - in: "body"
+        name: "new_announcement"
+        description: "Submitted new announcement"
+        required: true
+        schema:
+          $ref: "#/definitions/DetailedAnnouncement"
+      responses:
+        201:
+          description: "Success, Created"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /count:
+    get:
+      tags:
+      - "Admin"
+      summary: "Get Attendant Count"
+      description: "For admin, get count of all attendants.\n"
+      parameters: []
+      responses:
+        200:
+          description: "Count"
+          schema:
+            $ref: "#/definitions/Count"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /location/add:
+    post:
+      tags:
+      - "Admin"
+      summary: "Add default location"
+      description: "For admin, create a new default location.\n"
+      parameters:
+      - in: "body"
+        name: "new_location"
+        description: "New location to add"
+        required: true
+        schema:
+          $ref: "#/definitions/Location"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin"
+        required: true
+        type: "string"
+      responses:
+        201:
+          description: "Success, Created"
+        401:
+          description: "Authorization failure"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /location/delete/<id>:
+    delete:
+      tags:
+      - "Admin"
+      summary: "Delete a location"
+      description: "For system admin, delete a location. Announcements using this\
+        \ location will be auto-converted to custom location format.\n"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Unique ID of a location"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Authorization token of an admin"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Not authorized to delete"
+        404:
+          description: "Location not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /location/list:
+    get:
+      tags:
+      - "Applicant"
+      - "Admin"
+      summary: "List all default locations"
+      description: "Get a list of all default locations for selection.\n"
+      parameters: []
+      responses:
+        200:
+          description: "An array of locations"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Location"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /upload/info:
+    get:
+      tags:
+      - "Applicant"
+      summary: "Get Upload Info"
+      description: "For applicants, get info for upload image to Amazon S3 cloud storage.\n"
+      parameters: []
+      responses:
+        200:
+          description: "Cloud upload info"
+          schema:
+            $ref: "#/definitions/UploadInfo"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /user/access:
+    post:
+      tags:
+      - "Applicant"
+      summary: "Applicant access by code"
+      description: "For applicant, get access to the system with email and access\
+        \ code.\n"
+      parameters:
+      - in: "body"
+        name: "access_info"
+        description: "Applicant access info"
+        required: true
+        schema:
+          $ref: "#/definitions/AccessInfo"
+      responses:
+        200:
+          description: "Success, OK"
+          schema:
+            $ref: "#/definitions/Token"
+        401:
+          description: "Wrong access info"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /user/changepwd:
+    post:
+      tags:
+      - "Admin"
+      summary: "Admin change password"
+      description: "For admin, change password (Internal only).\n"
+      parameters:
+      - in: "body"
+        name: "changepwd_info"
+        description: "Admin change password info"
+        required: true
+        schema:
+          $ref: "#/definitions/ChangePwdInfo"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Wrong login info"
+        422:
+          description: "New password is invalid (6-30 chars)"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /user/login:
+    post:
+      tags:
+      - "Admin"
+      summary: "Admin login"
+      description: "For admin, login to the system.\n"
+      parameters:
+      - in: "body"
+        name: "login_info"
+        description: "Admin login info"
+        required: true
+        schema:
+          $ref: "#/definitions/LoginInfo"
+      responses:
+        200:
+          description: "Success, OK"
+          schema:
+            $ref: "#/definitions/Token"
+        401:
+          description: "Wrong login info"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /user/register:
+    post:
+      tags:
+      - "Admin"
+      summary: "Admin register"
+      description: "For admin, register a new account (Internal only).\n"
+      parameters:
+      - in: "body"
+        name: "login_info"
+        description: "Admin login info"
+        required: true
+        schema:
+          $ref: "#/definitions/LoginInfo"
+      responses:
+        201:
+          description: "Success, Created"
+        422:
+          description: "Username already registered; username or password is invalid\
+            \ (username: 5-20 chars, password: 6-30 chars)"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /user/retrievecode:
+    post:
+      tags:
+      - "Applicant"
+      summary: "Retrieve access code by email"
+      description: "For applicant, retrieve access code by email. A new access code\
+        \ will be sent by email.\n"
+      parameters:
+      - in: "body"
+        name: "email"
+        description: "Applicant email address"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "Success, OK"
+        401:
+          description: "Email not exists"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
+  Location:
+    type: "object"
+    required:
+    - "lat"
+    - "lng"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "Unique ID of a location."
+      name:
+        type: "string"
+        description: "Name of a location."
+      lat:
+        type: "number"
+        format: "double"
+        description: "Latitude of a location."
+      lng:
+        type: "number"
+        format: "double"
+        description: "Longitude of a location."
+  Announcement:
+    type: "object"
+    required:
+    - "hostEmail"
+    - "hostFirstName"
+    - "id"
+    - "isEvent"
+    - "pushDate"
+    - "summary"
+    - "title"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+        description: "Unique ID of an announcement."
+      title:
+        type: "string"
+        description: "Title of an announcement."
+      summary:
+        type: "string"
+        description: "Brief summary of an announcement."
+      pushDate:
+        type: "string"
+        format: "date"
+        description: "Push date of an announcement."
+      isEvent:
+        type: "boolean"
+        description: "Whether or not the announcement is an event announcement."
+      eventTime:
+        type: "string"
+        format: "date-time"
+        description: "The event beginning time."
+      foodProvided:
+        type: "boolean"
+        description: "Whether or not the event provides food. (Event only)"
+      location:
+        $ref: "#/definitions/Location"
+      locationName:
+        type: "string"
+        description: "Customized location name."
+      locationDesc:
+        type: "string"
+        description: "Description of location like room number and other info."
+      locationLat:
+        type: "number"
+        format: "double"
+        description: "Customized location latitude."
+      locationLng:
+        type: "number"
+        format: "double"
+        description: "Customized location longitude."
+      hostFirstName:
+        type: "string"
+        description: "First name of announcement's applicant."
+      hostLastName:
+        type: "string"
+        description: "Last name of announcement's applicant."
+      hostOrganization:
+        type: "string"
+        description: "Organization of announcement's applicant."
+      hostEmail:
+        type: "string"
+        description: "Email address of announcement's applicant."
+      hostPhone:
+        type: "string"
+        description: "Phone number of announcement's applicant."
+  DetailedAnnouncement:
+    allOf:
+    - $ref: "#/definitions/Announcement"
+    - properties:
+        detail:
+          type: "string"
+          description: "Detailed description of an announcement"
+  AnnouncementForManagement:
+    allOf:
+    - $ref: "#/definitions/Announcement"
+    - properties:
+        submitTime:
+          type: "string"
+          format: "date-time"
+          description: "Submit time of an announcement."
+        status:
+          type: "string"
+          description: "Current status of an announcement."
+          enum:
+          - "Unapproved"
+          - "Approved"
+          - "Declined"
+          - "Pushed"
+          - "Expired"
+          default: "Unapproved"
+  AttendantInfo:
+    type: "object"
+    required:
+    - "firstName"
+    properties:
+      firstName:
+        type: "string"
+        description: "First name of a user."
+      lastName:
+        type: "string"
+        description: "Last name of a user."
+      organization:
+        type: "string"
+        description: "Organization of a user."
+      email:
+        type: "string"
+        description: "Email address of a user."
+      phone:
+        type: "string"
+        description: "Phone number of a user."
+  LoginInfo:
+    type: "object"
+    required:
+    - "password"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        description: "Admin username."
+      password:
+        type: "string"
+        format: "password"
+        description: "Admin password."
+  ChangePwdInfo:
+    type: "object"
+    required:
+    - "new_pwd"
+    - "username"
+    properties:
+      username:
+        type: "string"
+        description: "Admin username."
+      new_pwd:
+        type: "string"
+        format: "password"
+        description: "New password."
+  AccessInfo:
+    type: "object"
+    required:
+    - "accessCode"
+    - "email"
+    properties:
+      email:
+        type: "string"
+        description: "Email address of a user."
+      accessCode:
+        type: "string"
+        format: "password"
+        description: "Applicant access code."
+  Token:
+    type: "object"
+    required:
+    - "token"
+    properties:
+      token:
+        type: "string"
+        description: "Random token for authorization."
+  UploadInfo:
+    type: "object"
+    properties:
+      accessKeyID:
+        type: "string"
+        description: "S3 Access Key ID."
+      secureAccessKey:
+        type: "string"
+        description: "S3 Secret Access Key."
+      bucket:
+        type: "string"
+        description: "S3 Bucket."
+      key:
+        type: "string"
+        description: "Random 8-bytes string used as file identifier."
+  Count:
+    type: "object"
+    properties:
+      token:
+        type: "integer"
+        format: "int32"
+        description: "Count of all attendants using the system."

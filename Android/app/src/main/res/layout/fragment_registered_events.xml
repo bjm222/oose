@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yuanweizhao.announcment.AnnouncementUI.Local.RegisteredEventsFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/registered_events_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="#ffffff"
+        android:backgroundTint="@color/colorPrimary"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabIndicatorColor="@color/colorGrey" />
+
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/all_announcements_viewpager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <LinearLayout
+        android:id="@+id/registered_events_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+</LinearLayout>

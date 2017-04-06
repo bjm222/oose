@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/myInfoWindow"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/windowTitle"
+            android:layout_marginLeft="5dp"
+            android:textColor="#000000"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="Summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/windowSummary"
+            android:layout_marginLeft="5dp"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Detail"
+                android:layout_height="40dp"
+                android:id="@+id/WindowDetail"
+                android:layout_weight="0.02"
+                android:layout_marginLeft="5dp"
+                android:layout_width="150dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

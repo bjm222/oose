@@ -1,0 +1,27 @@
+# .coveragerc to control coverage.py
+[run]
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+	pragma: no cover
+    except: # Unexpected error occurred
+    error['error'] = {'code': 500, 'message': 'Unexpected error: ' + sys.exc_info()[0].__name__}
+    return Response(error, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    elif res_auth['type'] == 'user':
+    error['error'] = {'code': 403, 'message': 'Only admins can make this request.'}
+    return Response(error, status=status.HTTP_403_FORBIDDEN)
+
+    try:
+    user = User.objects.get(token=token)
+    if user.tokenExpirationTime > timezone.now():
+    result = {'type': 'user', 'id': user.id}
+    else:
+    result = {'type': 'error', 'error': {'error': {'code': 401, 'message': 'Token expired'}}}
+    return result
+
+ignore_errors = True
+
+[html]
+directory = coverage_html_report
